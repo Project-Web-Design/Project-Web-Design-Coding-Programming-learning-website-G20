@@ -1,0 +1,205 @@
+.editor-shell {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: #fff;
+}
+
+@media (max-width:900px) {
+    .editor-shell {
+        grid-template-columns: 1fr;
+    }
+}
+
+.editor-side {
+    padding: 30px;
+    border-right: 1px solid var(--border);
+}
+
+@media (max-width:900px) {
+    .editor-side {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+.editor-side h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.editor-side p {
+    font-size: 15px;
+    color: var(--text-body);
+    margin-bottom: 8px;
+}
+
+.editor-side code {
+    background: #F5F8FD;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 13.5px;
+    color: var(--secondary);
+}
+
+.editor-pane {
+    background: #0F1B2D;
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid #1E2E45;
+}
+
+.editor-topbar span {
+    font-family: 'Fira Code', monospace;
+    font-size: 12.5px;
+    color: #7C8CA6;
+}
+
+textarea#codeInput {
+    flex: 1;
+    min-height: 180px;
+    background: transparent;
+    border: none;
+    resize: vertical;
+    color: #E5EAF2;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 20px;
+    width: 100%;
+}
+
+textarea#codeInput:focus {
+    outline: none;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px;
+    border-top: 1px solid #1E2E45;
+    flex-wrap: wrap;
+}
+
+.output-box {
+    margin: 0 18px 18px;
+    background: #0B1524;
+    border: 1px solid #1E2E45;
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+.output-box .label {
+    font-size: 11.5px;
+    letter-spacing: .03em;
+    color: #7C8CA6;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.output-box pre {
+    font-family: 'Fira Code', monospace;
+    font-size: 13.5px;
+    color: #4ADE9C;
+    white-space: pre-wrap;
+}
+
+.feedback {
+    font-size: 13.5px;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.feedback.ok {
+    color: #4ADE9C;
+}
+
+.feedback.bad {
+    color: #FDBA74;
+}
+.filter-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.filter-btn {
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-size: 14px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1.5px solid #1E3A8A;
+    color: #1E3A8A;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.filter-btn:hover {
+    border-color: #0D9A6D;
+    color: #0D9A6D;
+}
+
+.filter-btn.active {
+    border-color: #0D9A6D;
+    background: #0D9A6D;
+}
+
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 56px;
+}
+
+@media (max-width:900px) {
+    .exercise-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width:640px) {
+    .exercise-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ex-card {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ex-card h3 {
+    font-size: 17px;
+}
+
+.ex-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.ex-meta span {
+    color: #1E3A8A;
+    background: #F5F8FD;
+    border: 1px solid #1E3A8A;
+    padding: 3px 9px;
+    border-radius: 6px;
+}

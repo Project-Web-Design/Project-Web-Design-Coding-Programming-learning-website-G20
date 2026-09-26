@@ -1,0 +1,46 @@
+.contact-grid {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 40px;
+}
+
+@media (max-width:900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-card {
+  padding: 22px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.info-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #ECFDF5;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  font-size: 18px;
+}
+
+.info-card h4 {
+  font-size: 15px;
+  margin-bottom: 3px;
+}
+
+.info-card p {
+  font-size: 14.5px;
+  color: var(--text-body);
+}
+
+.form-card {
+  padding: 30px;
+}

@@ -10,8 +10,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poltawski+Nowy:wght@500;600;700;800&family=Open+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/tutorial.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tutorial.css">
 </head>
 
 <body>
@@ -19,13 +19,13 @@
   <header class="nav">
     <div class="nav-inner">
       <a href="index.html" class="logo-block" aria-label="CPLW home">
-        <img class="logo" src="../image/logo.jpg" alt="CPLW logo">
+        <img class="logo" src="image/logo.jpg" alt="CPLW logo">
       </a>
       <nav class="links" aria-label="Primary">
         <a href="index.html" data-route="tutorial">Tutorial</a>
-        <a href="exercise.html" data-route="exercises">Exercises</a>
-        <a href="research.html" data-route="research">Research</a>
-        <a href="contact.html" data-route="contact">Contact Us</a>
+        <a href="page/exercise.html" data-route="exercises">Exercises</a>
+        <a href="page/research.html" data-route="research">Research</a>
+        <a href="page/contact.html" data-route="contact">Contact Us</a>
       </nav>
       <div class="nav-actions">
         <a href="#" id="authLink" class="btn btn-ghost btn-sm desktop-only">Log in</a>
@@ -36,8 +36,8 @@
             <span class="profile-chevron" aria-hidden="true">▾</span>
           </button>
           <div class="profile-dropdown" id="profileDropdown" role="menu">
-            <a href="dashboard.html" data-route="dashboard" data-auth="true" role="menuitem">Dashboard</a>
-            <a href="profile.html" data-route="profile" data-auth="true" role="menuitem">Profile</a>
+            <a href="page/dashboard.html" data-route="dashboard" data-auth="true" role="menuitem">Dashboard</a>
+            <a href="page/profile.html" data-route="profile" data-auth="true" role="menuitem">Profile</a>
             <button id="logoutMenuBtn" role="menuitem">Log out</button>
           </div>
         </div>
@@ -49,9 +49,9 @@
     <div class="mobile-panel" id="mobilePanel">
       <div class="wrap">
         <a href="index.html" data-route="tutorial">Tutorial</a>
-        <a href="exercise.html" data-route="exercises">Exercises</a>
-        <a href="research.html" data-route="research">Research</a>
-        <a href="contact.html" data-route="contact">Contact Us</a>
+        <a href="page/exercise.html" data-route="exercises">Exercises</a>
+        <a href="page/research.html" data-route="research">Research</a>
+        <a href="page/contact.html" data-route="contact">Contact Us</a>
         <a href="#" id="authLinkMobile">Log in / Register</a>
       </div>
     </div>
@@ -67,7 +67,7 @@
             experience needed.</p>
           <div class="hero-actions">
             <button class="btn btn-primary" id="heroStartLearning">Start Learning</button>
-            <a href="exercise.html" class="btn btn-ghost" data-route="exercises">Practice Exercises</a>
+            <a href="page/exercise.html" class="btn btn-ghost" data-route="exercises">Practice Exercises</a>
           </div>
         </div>
         <div class="code-visual">
@@ -94,7 +94,7 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
         </div>
         <div class="topics-grid">
           <article class="card topic-card">
-            <div class="topic-icon"><img src="../image/html.png" alt="HTML"></div>
+            <div class="topic-icon"><img src="image/html.png" alt="HTML"></div>
             <h3>HTML</h3>
             <p>Learn the basics of creating web pages.</p>
             <div class="topic-meta">
@@ -104,7 +104,7 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
             </div>
           </article>
           <article class="card topic-card">
-            <div class="topic-icon"><img src="../image/css.png" alt="CSS"></div>
+            <div class="topic-icon"><img src="image/css.png" alt="CSS"></div>
             <h3>CSS</h3>
             <p>Learn how to style and design websites.</p>
             <div class="topic-meta">
@@ -113,7 +113,7 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
             </div>
           </article>
           <article class="card topic-card">
-            <div class="topic-icon"><img src="../image/js.png" alt="JavaScript"></div>
+            <div class="topic-icon"><img src="image/js.png" alt="JavaScript"></div>
             <h3>JavaScript</h3>
             <p>Learn programming logic and interactive web development.</p>
             <div class="topic-meta">
@@ -122,7 +122,7 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
             </div>
           </article>
           <article class="card topic-card">
-            <div class="topic-icon"><img src="../image/c++.png" alt="C++"></div>
+            <div class="topic-icon"><img src="image/c++.png" alt="C++"></div>
             <h3>C++</h3>
             <p>Build advanced programs with C++.</p>
             <div class="topic-meta">
@@ -132,7 +132,7 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
             </div>
           </article>
           <article class="card topic-card">
-            <div class="topic-icon"><img src="../image/sql.png" alt="SQL"></div>
+            <div class="topic-icon"><img src="image/sql.png" alt="SQL"></div>
             <h3>SQL</h3>
             <p>Query and manage databases.</p>
             <div class="topic-meta">
@@ -141,7 +141,7 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
             </div>
           </article>
           <article class="card topic-card">
-            <div class="topic-icon"><img src="../image/py.png" alt="Python"></div>
+            <div class="topic-icon"><img src="image/py.png" alt="Python"></div>
             <h3>Python</h3>
             <p>Learn programming fundamentals using Python.</p>
             <div class="topic-meta">
@@ -169,7 +169,7 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
     <div class="wrap">
       <div class="foot-grid">
         <div>
-          <img class="logo" src="../image/logo.jpg" alt="CPLW logo">
+          <img class="logo" src="image/logo.jpg" alt="CPLW logo">
           <div class="tag">Coding Programming Learning Website</div>
           <p class="desc">Helping beginner programmers learn through simple tutorials, hands-on exercises, and clear
             explanations.</p>
@@ -194,9 +194,9 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
           <h5>Quick links</h5>
           <ul>
             <li><a href="index.html" data-route="tutorial">Tutorial</a></li>
-            <li><a href="exercise.html" data-route="exercises">Exercises</a></li>
-            <li><a href="research.html" data-route="research">Research</a></li>
-            <li><a href="contact.html" data-route="contact">Contact Us</a></li>
+            <li><a href="page/exercise.html" data-route="exercises">Exercises</a></li>
+            <li><a href="page/research.html" data-route="research">Research</a></li>
+            <li><a href="page/contact.html" data-route="contact">Contact Us</a></li>
           </ul>
         </div>
         <div>
@@ -266,8 +266,8 @@ console.<span class="f">log</span>(<span class="f">greet</span>());
 
   <div class="toast" id="toast"><span class="dot"></span><span id="toastText">Saved</span></div>
 
-  <script src="../js/style.js"></script>
-  <script src="../js/tutorial.js"></script> 
+  <script src="js/style.js"></script>
+  <script src="js/tutorial.js"></script>
 </body>
 
 </html>

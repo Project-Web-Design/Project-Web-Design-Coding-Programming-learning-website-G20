@@ -22,6 +22,9 @@
     var open = mobilePanel.classList.toggle("open");
     hamburgerBtn.setAttribute("aria-expanded", open ? "true" : "false");
   });
+  window.addEventListener("resize", function(){
+    if (window.innerWidth > 1024) closeMobilePanel();
+  });
 
   /* ---------- Highlight current nav link ---------- */
   var currentFile = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();

@@ -370,7 +370,7 @@ nav.links a.active {
 .hamburger span {
   width: 24px;
   height: 2.5px;
-  background: var(--text-heading);
+  background: #1E3A8A;
   border-radius: 2px;
   transition: .2s;
 }
@@ -393,16 +393,27 @@ nav.links a.active {
 }
 
 .mobile-panel a {
+  display: block;
   font-weight: 600;
   font-size: 16px;
-  padding: 6px 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  transition: color .15s, background-color .15s;
+}
+
+.mobile-panel a:hover,
+.mobile-panel a:focus-visible,
+.mobile-panel a:active,
+.mobile-panel a.active {
+  color: #fff;
+  background: var(--primary);
 }
 
 p{
   color: #5B5B5B;
 }
 
-@media (max-width:900px) {
+@media (max-width:1024px) {
   nav.links {
     display: none;
   }
@@ -413,6 +424,12 @@ p{
 
   .hamburger {
     display: flex;
+  }
+}
+
+@media (min-width:1025px) {
+  .mobile-panel.open {
+    display: none;
   }
 }
 

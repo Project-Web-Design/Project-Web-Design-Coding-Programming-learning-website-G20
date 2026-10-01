@@ -6,30 +6,113 @@
 
   var currentExercise = exercises[0];
   var codeInput = document.getElementById("codeInput");
+  var codeHighlight = document.getElementById("codeHighlight");
   var outputArea = document.getElementById("outputArea");
   var feedbackArea = document.getElementById("feedbackArea");
+
+  function escapeHtml(value){
+    return value.replace(/[&<>\"]/g, function(character){
+      return {"&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;"}[character];
+    });
+  }
+
+  function updateHighlight(){
+    var source = codeInput.value;
+    var tokenPattern = /\/\/[^\r\n]*|\/\*[\s\S]*?\*\/|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`|\b(?:let|const|var|if|else|for|while|do|function|return|new|class|extends|this|throw|try|catch|finally|switch|case|break|continue|of|in|typeof|instanceof|async|await|import|export|from|default)\b|\b(?:true|false|null|undefined|NaN|Infinity)\b|\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b|[A-Za-z_$][\w$]*|[\s\S]/g;
+    var token;
+    var highlighted = "";
+
+    while ((token = tokenPattern.exec(source)) !== null) {
+      var value = token[0];
+      var tokenClass = "";
+
+      if (/^(?:\/\/|\/\*)/.test(value)) {
+        tokenClass = "comment";
+      } else if (/^["'`]/.test(value)) {
+        tokenClass = "string";
+      } else if (/^(?:let|const|var|if|else|for|while|do|function|return|new|class|extends|this|throw|try|catch|finally|switch|case|break|continue|of|in|typeof|instanceof|async|await|import|export|from|default)$/.test(value)) {
+        tokenClass = "keyword";
+      } else if (/^(?:true|false|null|undefined|NaN|Infinity)$/.test(value)) {
+        tokenClass = "boolean";
+      } else if (/^\d/.test(value)) {
+        tokenClass = "number";
+      } else if (/^[A-Za-z_$]/.test(value)) {
+        tokenClass = /^\s*\(/.test(source.slice(tokenPattern.lastIndex)) ? "function" : "variable";
+      }
+
+      highlighted += tokenClass
+        ? '<span class="syntax-' + tokenClass + '">' + escapeHtml(value) + '</span>'
+        : escapeHtml(value);
+    }
+
+    codeHighlight.innerHTML = highlighted + (source.slice(-1) === "\n" ? " " : "");
+  }
 
   function loadExercise(e){
     currentExercise = e;
     document.getElementById("exTitle").textContent = e.title;
     document.getElementById("exDesc").textContent = "Topic: " + e.topic + ". Write the code below to solve this exercise, then run it to check the output.";
     codeInput.value = e.code;
+    updateHighlight();
     outputArea.textContent = "Run your code to see the output here.";
     feedbackArea.textContent = "";
     feedbackArea.className = "feedback";
   }
   window.CPLW.loadExercise = loadExercise;
 
+  codeInput.addEventListener("input", updateHighlight);
+  codeInput.addEventListener("scroll", function(){
+    codeHighlight.style.transform = "translate(" + -codeInput.scrollLeft + "px, " + -codeInput.scrollTop + "px)";
+  });
+  updateHighlight();
+
   function mockRun(code){
     var lines = code.split("\n");
     var out = [];
     var vars = {};
-    lines.forEach(function(line){
+    function runLine(line){
       var varMatch = line.match(/^\s*(?:let|const|var)\s+(\w+)\s*=\s*(.+?);?\s*$/);
       if (varMatch) { vars[varMatch[1]] = varMatch[2].trim(); }
       var logMatch = line.match(/console\.log\((.+)\)\s*;?\s*$/);
       if (logMatch) { out.push(evalExpr(logMatch[1].trim(), vars)); }
-    });
+    }
+
+    for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+      var loopMatch = lines[lineIndex].match(/^\s*for\s*\(\s*(?:(?:let|const|var)\s+)?([A-Za-z_$][\w$]*)\s*=\s*(-?\d+)\s*;\s*\1\s*(<=|<|>=|>)\s*(-?\d+)\s*;\s*\1\s*(\+\+|--|\+=\s*-?\d+|-=\s*-?\d+)\s*\)\s*\{\s*$/);
+      if (!loopMatch) {
+        runLine(lines[lineIndex]);
+        continue;
+      }
+
+      var bodyEnd = lineIndex + 1;
+      var braceDepth = 1;
+      for (; bodyEnd < lines.length && braceDepth > 0; bodyEnd++) {
+        braceDepth += (lines[bodyEnd].match(/\{/g) || []).length;
+        braceDepth -= (lines[bodyEnd].match(/\}/g) || []).length;
+      }
+      if (braceDepth !== 0) { continue; }
+
+      var variableName = loopMatch[1];
+      var value = Number(loopMatch[2]);
+      var operator = loopMatch[3];
+      var limit = Number(loopMatch[4]);
+      var stepText = loopMatch[5].replace(/\s/g, "");
+      var step = stepText === "++" ? 1 : stepText === "--" ? -1 : Number(stepText.slice(2)) * (stepText.slice(0, 2) === "+=" ? 1 : -1);
+      var condition = function(){
+        if (operator === "<") { return value < limit; }
+        if (operator === "<=") { return value <= limit; }
+        if (operator === ">") { return value > limit; }
+        return value >= limit;
+      };
+
+      for (var iteration = 0; iteration < 1000 && condition(); iteration++, value += step) {
+        vars[variableName] = String(value);
+        for (var bodyIndex = lineIndex + 1; bodyIndex < bodyEnd - 1; bodyIndex++) {
+          runLine(lines[bodyIndex]);
+        }
+      }
+      lineIndex = bodyEnd - 1;
+    }
     return out.join("\n");
   }
   function evalExpr(expr, vars){
@@ -55,6 +138,7 @@
   });
   document.getElementById("resetBtn").addEventListener("click", function(){
     codeInput.value = currentExercise.code;
+    updateHighlight();
     outputArea.textContent = "Run your code to see the output here.";
     feedbackArea.textContent = "";
     feedbackArea.className = "feedback";

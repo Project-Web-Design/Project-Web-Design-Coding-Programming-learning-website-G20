@@ -75,13 +75,16 @@
             <p id="exDesc">Create a variable called <code>name</code> and assign your name to it, then print it with
               <code>console.log</code>.
             </p>
-            <p style="margin-top:16px; font-size:13.5px; color:var(--text-muted);">Expected output: your name printed to
+            <p style="margin-top:16px; font-size:13.5px; color:var(--text-muted);">Expected output: your numbers 1-5 printed to
               the console.</p>
           </div>
           <div class="editor-pane">
             <div class="editor-topbar"><span>solution.js</span><span>Fira Code</span></div>
-            <textarea id="codeInput" spellcheck="false">let name = "John";
+            <div class="code-editor">
+              <pre id="codeHighlight" class="code-highlight" aria-hidden="true"></pre>
+              <textarea id="codeInput" spellcheck="false" aria-label="JavaScript code editor">let name = "John";
 console.log(name);</textarea>
+            </div>
             <div class="editor-actions">
               <button class="btn btn-primary btn-sm" id="runBtn">Run Code</button>
               <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>

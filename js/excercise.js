@@ -9,6 +9,7 @@
   var codeHighlight = document.getElementById("codeHighlight");
   var outputArea = document.getElementById("outputArea");
   var feedbackArea = document.getElementById("feedbackArea");
+  var expectedOutput = document.getElementById("expectedOutput");
 
   function escapeHtml(value){
     return value.replace(/[&<>\"]/g, function(character){
@@ -52,6 +53,7 @@
     currentExercise = e;
     document.getElementById("exTitle").textContent = e.title;
     document.getElementById("exDesc").textContent = "Topic: " + e.topic + ". Write the code below to solve this exercise, then run it to check the output.";
+    expectedOutput.textContent = e.expected;
     codeInput.value = e.code;
     updateHighlight();
     outputArea.textContent = "Run your code to see the output here.";
@@ -70,11 +72,23 @@
     var lines = code.split("\n");
     var out = [];
     var vars = {};
+    var functions = {};
+    var functionPattern = /function\s+([A-Za-z_$][\w$]*)\s*\(\s*([A-Za-z_$][\w$]*)?\s*\)\s*\{([\s\S]*?)\}/g;
+    var functionMatch;
+    while ((functionMatch = functionPattern.exec(code)) !== null) {
+      var returnMatch = functionMatch[3].match(/\breturn\s+([\s\S]*?);?\s*$/);
+      if (returnMatch) {
+        functions[functionMatch[1]] = {
+          parameter: functionMatch[2],
+          expression: returnMatch[1].replace(/;\s*$/, "").trim()
+        };
+      }
+    }
     function runLine(line){
       var varMatch = line.match(/^\s*(?:let|const|var)\s+(\w+)\s*=\s*(.+?);?\s*$/);
       if (varMatch) { vars[varMatch[1]] = varMatch[2].trim(); }
       var logMatch = line.match(/console\.log\((.+)\)\s*;?\s*$/);
-      if (logMatch) { out.push(evalExpr(logMatch[1].trim(), vars)); }
+      if (logMatch) { out.push(evalExpr(logMatch[1].trim(), vars, functions)); }
     }
 
     for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
@@ -115,13 +129,22 @@
     }
     return out.join("\n");
   }
-  function evalExpr(expr, vars){
+  function evalExpr(expr, vars, functions){
     if (/^["'].*["']$/.test(expr)) return expr.slice(1,-1);
     if (/^-?\d+(\.\d+)?$/.test(expr)) return expr;
     if (expr === "true" || expr === "false") return expr;
-    if (vars[expr] !== undefined) return evalExpr(vars[expr], vars);
+    var callMatch = expr.match(/^([A-Za-z_$][\w$]*)\((.*)\)$/);
+    if (callMatch && functions[callMatch[1]]) {
+      var definedFunction = functions[callMatch[1]];
+      var functionVars = Object.assign({}, vars);
+      if (definedFunction.parameter) {
+        functionVars[definedFunction.parameter] = evalExpr(callMatch[2], vars, functions);
+      }
+      return evalExpr(definedFunction.expression, functionVars, functions);
+    }
+    if (vars[expr] !== undefined) return evalExpr(vars[expr], vars, functions);
     if (expr.indexOf("+") > -1) {
-      return expr.split("+").map(function(p){ return evalExpr(p.trim(), vars); }).join("");
+      return expr.split("+").map(function(p){ return evalExpr(p.trim(), vars, functions); }).join("");
     }
     return expr;
   }
@@ -211,5 +234,6 @@
       });
   }
   renderExercises();
+  window.CPLW.loadExercise(exercises[0]);
 
 })();

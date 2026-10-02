@@ -28,10 +28,12 @@
       })
         .then(function(response){
           if (!response.ok) throw new Error("Message could not be sent");
+          document.getElementById("toast").classList.add("success");
           showToast("Your message has been sent successfully!");
           contactForm.reset();
         })
         .catch(function(){
+          document.getElementById("toast").classList.remove("success");
           showToast("Unable to send your message. Please try again.");
         })
         .finally(function(){

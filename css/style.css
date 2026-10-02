@@ -565,6 +565,10 @@ p{
   background: var(--primary);
 }
 
+.toast.success #toastText {
+  color: #1E3A8A;
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;
